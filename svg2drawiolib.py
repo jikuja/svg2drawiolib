@@ -19,23 +19,22 @@
 # SOFTWARE.
 
 import argparse
-import glob
-import json
-import os
 import sys
 
-from lib import create_data_shape, create_xml_shape
+from lib import convert
 
-def setup_argparse():
+DEFAULT_STYLE='shape=image;verticalLabelPosition=bottom;verticalAlign=top;imageAspect=0;aspect=fixed'
+
+def _setup_argparse():
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', help='mode', default='xml', choices=['data', 'xml'])
     parser.add_argument('--outfile', help='filename to output', default='output.xml')
-    parser.add_argument('--style', help='style to use', default='shape=image;verticalLabelPosition=bottom;verticalAlign=top;imageAspect=0;aspect=fixed')
+    parser.add_argument('--style', help='style to use', default=DEFAULT_STYLE)
     parser.add_argument('--width', default=40)
     parser.add_argument('--height', default=40)
     parser.add_argument('--prefix', default='')
     parser.add_argument('--dirtitle', default=False, action='store_true')
-    parser.add_argument('input', help='input files (glob)', nargs='*')
+    parser.add_argument('input', help='input files (iglob and/or directories)', nargs='*')
     args = parser.parse_args()
 
     if not args.input:
@@ -45,36 +44,20 @@ def setup_argparse():
 
     return args
 
-def find_files(x):
-    if os.path.exists(x) and os.path.isdir(x):
-        return glob.iglob(x + '/**/*.svg', recursive=True)
-    else:
-        return glob.iglob(x, recursive=True)
-
-def main(args):
+def _main(args):
     mode = args.mode
-    input_glob = args.input
     outfile = args.outfile
+    input_files = args.input
+    prefix = args.prefix
+    h = args.height
+    w = args.width
+    style = args.style
+    dirtitle= args.dirtitle
 
-    
-
-    result = []
-    filenames = [find_files(i) for i in args.input]
-    for filename_iter in filenames:
-        for filename in filename_iter:
-            if mode == 'data':
-                shape = create_data_shape(filename,
-                                          prefix=args.prefix, use_directory_on_title=args.dirtitle,
-                                          w=args.width, h=args.height)
-            elif mode == 'xml':
-                shape = create_xml_shape(filename, style=args.style,
-                                         prefix=args.prefix, use_directory_on_title=args.dirtitle,
-                                         w=args.width, h=args.height)
-            result.append(shape)
-
-    output_str = '<mxlibrary>' + json.dumps(result) + '</mxlibrary>'
+    output_str = convert(input_files=input_files, mode=mode, prefix=prefix, dirtitle=dirtitle,
+                         style=style, h=h, w=w)
     with open(outfile, 'w', encoding='utf-8') as text_file:
         text_file.write(output_str)
 
 if __name__ == '__main__':
-    main(setup_argparse())
+    _main(_setup_argparse())
