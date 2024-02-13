@@ -1,0 +1,6 @@
+[project]
+name = "svg2drawiolib"
+version = "0.0.1"
+
+[project.scripts]
+svg2drawiolib = "app:_main"

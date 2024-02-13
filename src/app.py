@@ -21,7 +21,7 @@
 import argparse
 import sys
 
-from lib import convert
+from svg2drawiolib import convert
 
 DEFAULT_STYLE='shape=image;verticalLabelPosition=bottom;verticalAlign=top;imageAspect=0;aspect=fixed'
 
@@ -44,7 +44,8 @@ def _setup_argparse():
 
     return args
 
-def _main(args):
+def _main():
+    args = _setup_argparse()
     mode = args.mode
     outfile = args.outfile
     input_files = args.input
@@ -60,4 +61,4 @@ def _main(args):
         text_file.write(output_str)
 
 if __name__ == '__main__':
-    _main(_setup_argparse())
+    _main()
