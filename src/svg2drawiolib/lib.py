@@ -84,6 +84,7 @@ def create_xml_shape(filename, style='shape=image;verticalLabelPosition=bottom;v
         encoded_xml = base64.b64encode(compressed_xml).decode("ascii")
         title = prefix + (filename if use_directory_on_title else os.path.basename(filename))
         title = re.sub(r'\.svg$', '', title, count=1, flags=re.I)
+        title = title.replace('&', '&amp;')
         logging.debug('Converting %s with title %s', filename, title)
         shape = {
             "xml": encoded_xml,
