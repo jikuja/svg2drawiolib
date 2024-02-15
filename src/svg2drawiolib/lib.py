@@ -23,6 +23,7 @@ import glob
 import json
 import logging
 import os
+import re
 import zlib
 
 def _find_files_glob(x):
@@ -62,6 +63,7 @@ def create_data_shape(filename,
     with open(filename, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read()).decode("ascii")
         title = prefix + (filename if use_directory_on_title else os.path.basename(filename))
+        title = re.sub(r'svg$', '', title, count=1, flags=re.I)
         logging.debug('Converting %s with title %s', filename, title)
         shape = {
             "data": "data:image/svg+xml;base64," + encoded_string,
@@ -81,6 +83,7 @@ def create_xml_shape(filename, style='shape=image;verticalLabelPosition=bottom;v
         compressed_xml = zlib.compress(raw_xml.encode(), wbits=-15)
         encoded_xml = base64.b64encode(compressed_xml).decode("ascii")
         title = prefix + (filename if use_directory_on_title else os.path.basename(filename))
+        title = re.sub(r'\.svg$', '', title, count=1, flags=re.I)
         logging.debug('Converting %s with title %s', filename, title)
         shape = {
             "xml": encoded_xml,
