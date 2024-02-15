@@ -40,7 +40,7 @@ SVG source:
 
 Shape library:
 
-* [Download](https://raw.githubusercontent.com/jikuja/drawio-icons-msft-sundog/master/MSFT-bluedog.xml)
+* [Download shape library XML file](https://raw.githubusercontent.com/jikuja/drawio-icons-msft-sundog/master/MSFT-bluedog.xml)
 * [Add to Draw.io](https://app.diagrams.net/?splash=0&clibs=Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjikuja%2Fdrawio-icons-msft-sundog%2Fmaster%2FMSFT-bluedog.xml)
 
 ## Azure Icons for Draw.io by David Summers
@@ -50,7 +50,7 @@ SVG source/documentation/sponsor links:
 * <https://github.com/David-Summers/Azure-Design>
 * One of the best Azure icons collections
 
-Downloads:
+Download shape library XML file:
 
 * [AI](https://github.com/jikuja/drawio-icons-DS-Azure-Design/raw/master/DS-AI.xml)
 * [Application](https://github.com/jikuja/drawio-icons-DS-Azure-Design/raw/master/DS-Application.xml)
