@@ -5,19 +5,14 @@ Python CLI tool to convert SVG files to draw.io shape library
 ## Usage
 
 ```bash
-python3 src/app.py --help
-```
-
-or
-
-```bash
+pip install -e .
 svg2drawiolib --help
 ```
 
 ```text
-usage: app.py [-h] [--mode {data,xml}] [--output OUTPUT] [--style STYLE] [--width WIDTH]
-              [--height HEIGHT] [--prefix PREFIX] [--dirtitle] [--log-level LOG_LEVEL]
-              [input ...]
+usage: svg2drawiolib [-h] [--mode {data,xml}] [--output OUTPUT] [--style STYLE] [--width WIDTH]
+                     [--height HEIGHT] [--prefix PREFIX] [--dirtitle] [--log-level LOG_LEVEL]
+                     [input ...]
 ```
 
 ### input parameters

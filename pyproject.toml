@@ -1,6 +1,12 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "svg2drawiolib"
 version = "0.0.1"
+license = "Apache-2.0"
+dependencies = []
 
 [project.scripts]
-svg2drawiolib = "app:_main"
+svg2drawiolib = "svg2drawiolib.__main__:main"

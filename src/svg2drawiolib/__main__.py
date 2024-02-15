@@ -47,7 +47,7 @@ def _setup_argparse():
 
     return args
 
-def _main():
+def main():
     args = _setup_argparse()
     logging.basicConfig(level=args.log_level)
 
@@ -58,4 +58,4 @@ def _main():
         text_file.write(output_str)
 
 if __name__ == '__main__':
-    _main()
+    main()
