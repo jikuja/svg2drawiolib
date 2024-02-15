@@ -82,7 +82,7 @@ Add to Draw.io
 * [Management](https://app.diagrams.net/?splash=0&clibs=Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjikuja%2Fdrawio-icons-DS-Azure-Design%2Fmaster%2FDS-Management.xml)
 * [Networking](https://app.diagrams.net/?splash=0&clibs=Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjikuja%2Fdrawio-icons-DS-Azure-Design%2Fmaster%2FDS-Networking.xml)
 * [Office365](https://app.diagrams.net/?splash=0&clibs=Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjikuja%2Fdrawio-icons-DS-Azure-Design%2Fmaster%2FDS-Office365.xml)
-* Not working yet: [Security](https://app.diagrams.net/?splash=0&clibs=Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjikuja%2Fdrawio-icons-DS-Azure-Design%2Fmaster%2FDS-Security.xml)
+* [Security](https://app.diagrams.net/?splash=0&clibs=Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjikuja%2Fdrawio-icons-DS-Azure-Design%2Fmaster%2FDS-Security.xml)
 * [Storage](https://app.diagrams.net/?splash=0&clibs=Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjikuja%2Fdrawio-icons-DS-Azure-Design%2Fmaster%2FDS-Storage.xml)
 * [Workload](https://app.diagrams.net/?splash=0&clibs=Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjikuja%2Fdrawio-icons-DS-Azure-Design%2Fmaster%2FDS-Workload.xml)
 
