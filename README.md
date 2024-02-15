@@ -31,8 +31,19 @@ Input parameter is one or more directories or file globs patterns.
 
 ### MSFT glyphs for Draw.io
 
-* TBD: link to raw xml
-* TBD: URL-encoded link to add library into draw.io
+SVG source:
+
+* <https://azure.microsoft.com/en-gb/patterns/styles/glyphs-icons/>
+* `Azure.microsoft.com UX Patterns`
+* Note: some of the icons are missing because link to SVG return 404
+  * This will be fixed by parsing SVG information from the HTML
+
+Shape library:
+
+* Download: <https://raw.githubusercontent.com/jikuja/drawio-icons-msft-sundog/master/MSFT-bluedog.xml>
+* Add to Draw.io: <https://app.diagrams.net/?splash=0&clibs=Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fjikuja%2Fdrawio-icons-msft-sundog%2Fmaster%2FMSFT-bluedog.xml>
+
+
 
 ## Azure Icons for Draw.io
 
