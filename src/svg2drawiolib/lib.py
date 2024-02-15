@@ -24,6 +24,7 @@ import json
 import logging
 import os
 import re
+import sys
 import zlib
 
 def _find_files_glob(x):
@@ -64,7 +65,7 @@ def create_data_shape(filename,
         encoded_string = base64.b64encode(image_file.read()).decode("ascii")
         title = prefix + (filename if use_directory_on_title else os.path.basename(filename))
         title = re.sub(r'svg$', '', title, count=1, flags=re.I)
-        logging.debug('Converting %s with title %s', filename, title)
+        logging.debug('Converting %s with title %s h: %f w: %f' , filename, title, h, w)
         shape = {
             "data": "data:image/svg+xml;base64," + encoded_string,
             "w": w,
@@ -73,19 +74,25 @@ def create_data_shape(filename,
         }
         return shape
 
-def create_xml_shape(filename, style='shape=image;verticalLabelPosition=bottom;verticalAlign=top;imageAspect=0;aspect=fixed', 
+def create_xml_shape(filename, style=None,
                      prefix='', use_directory_on_title=False, w=40, h=40):
+    if style is None:
+        print('xml based shape requires style')
+        sys.exit(1)
     with open(filename, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read()).decode("ascii")
         image = encoded_string
         style_prop_value = f"{style};image=data:image/svg+xml," + image
-        raw_xml = '<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/><mxCell id="2" value="" style="' + style_prop_value + '" vertex="1" parent="1"><mxGeometry width="40" height="40" as="geometry"/></mxCell></root></mxGraphModel>'
+        raw_xml = ('<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>'
+                   '<mxCell id="2" value="" style="' + style_prop_value + '" vertex="1" parent="1">'
+                   '<mxGeometry width="' + str(w) + '" height="' + str(h) + '" as="geometry"/>'
+                   '</mxCell></root></mxGraphModel>')
         compressed_xml = zlib.compress(raw_xml.encode(), wbits=-15)
         encoded_xml = base64.b64encode(compressed_xml).decode("ascii")
         title = prefix + (filename if use_directory_on_title else os.path.basename(filename))
         title = re.sub(r'\.svg$', '', title, count=1, flags=re.I)
         title = title.replace('&', '&amp;')
-        logging.debug('Converting %s with title %s', filename, title)
+        logging.debug('Converting %s with title %s h: %f w: %f' , filename, title, h, w)
         shape = {
             "xml": encoded_xml,
             "w": w,

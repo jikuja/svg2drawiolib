@@ -24,8 +24,11 @@ import sys
 
 from svg2drawiolib import convert
 
-DEFAULT_STYLE=('shape=image;verticalLabelPosition=bottom;verticalAlign=top;'
-               'imageAspect=0;aspect=fixed')
+DEFAULT_STYLE=('shape=image;'
+               'verticalLabelPosition=bottom;'
+               'align=center;verticalAlign=top;' # label alignment
+               'imageAlign=center;imageVerticalAlign=middle;' # image alignment
+               'imageAspect=1;aspect=fixed')
 
 def _setup_argparse():
     parser = argparse.ArgumentParser()
