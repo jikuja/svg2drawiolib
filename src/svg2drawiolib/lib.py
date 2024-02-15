@@ -21,31 +21,38 @@
 import base64
 import glob
 import json
+import logging
 import os
 import zlib
 
-# TODO: rewrite. This should take input array and return ordered list of file
-def _find_files(x):
+def _find_files_glob(x):
     if os.path.exists(x) and os.path.isdir(x):
         return glob.iglob(x + '/**/*.svg', recursive=True)
     else:
         return glob.iglob(x, recursive=True)
 
-# TODO: make file discovery parametrized
-def convert(input_files, mode, prefix, dirtitle, style, height, width):
+def _find_files(paths):
+    files = []
+    for path in paths:
+        result = list(_find_files_glob(path))
+        files = files + result
+    files.sort()
+    return files
+
+def convert(input_files, mode, prefix, dirtitle, style, height, width, file_discovery=_find_files):
     result = []
-    filenames = [_find_files(i) for i in input_files]
-    for filename_iter in filenames:
-        for filename in filename_iter:
-            if mode == 'data':
-                shape = create_data_shape(filename,
-                                          prefix=prefix, use_directory_on_title=dirtitle,
-                                          w=width, h=height)
-            elif mode == 'xml':
-                shape = create_xml_shape(filename, style=style,
-                                         prefix=prefix, use_directory_on_title=dirtitle,
-                                         w=width, h=height)
-            result.append(shape)
+    filenames = file_discovery(input_files)
+    logging.debug('File discovery found %s files', len(filenames))
+    for filename in filenames:
+        if mode == 'data':
+            shape = create_data_shape(filename,
+                                        prefix=prefix, use_directory_on_title=dirtitle,
+                                        w=width, h=height)
+        elif mode == 'xml':
+            shape = create_xml_shape(filename, style=style,
+                                        prefix=prefix, use_directory_on_title=dirtitle,
+                                        w=width, h=height)
+        result.append(shape)
 
     output_str = '<mxlibrary>' + json.dumps(result) + '</mxlibrary>'
     return output_str
@@ -55,7 +62,7 @@ def create_data_shape(filename,
     with open(filename, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read()).decode("ascii")
         title = prefix + (filename if use_directory_on_title else os.path.basename(filename))
-        print(f'Converting {filename} with title {title}')
+        logging.debug('Converting %s with title %s', filename, title)
         shape = {
             "data": "data:image/svg+xml;base64," + encoded_string,
             "w": w,
@@ -74,7 +81,7 @@ def create_xml_shape(filename, style='shape=image;verticalLabelPosition=bottom;v
         compressed_xml = zlib.compress(raw_xml.encode(), wbits=-15)
         encoded_xml = base64.b64encode(compressed_xml).decode("ascii")
         title = prefix + (filename if use_directory_on_title else os.path.basename(filename))
-        print(f'Converting {filename} with title {title}')
+        logging.debug('Converting %s with title %s', filename, title)
         shape = {
             "xml": encoded_xml,
             "w": w,
