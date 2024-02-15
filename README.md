@@ -38,6 +38,10 @@ SVG source:
 * Note: some of the icons are missing because link to SVG return 404
   * This will be fixed by parsing SVG information from the HTML
 
+Preview:
+
+![Alt text](msft-sundog.png)
+
 Shape library:
 
 * [Download shape library XML file](https://raw.githubusercontent.com/jikuja/drawio-icons-msft-sundog/master/MSFT-bluedog.xml)
@@ -49,6 +53,10 @@ SVG source/documentation/sponsor links:
 
 * <https://github.com/David-Summers/Azure-Design>
 * One of the best Azure icons collections
+
+Preview
+![Alt text](ds-1.png)
+![Alt text](ds-2.png)
 
 Download shape library XML file:
 
