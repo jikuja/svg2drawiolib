@@ -23,17 +23,18 @@ import sys
 
 from svg2drawiolib import convert
 
-DEFAULT_STYLE='shape=image;verticalLabelPosition=bottom;verticalAlign=top;imageAspect=0;aspect=fixed'
+DEFAULT_STYLE=('shape=image;verticalLabelPosition=bottom;verticalAlign=top;',
+               'imageAspect=0;aspect=fixed')
 
 def _setup_argparse():
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', help='mode', default='xml', choices=['data', 'xml'])
-    parser.add_argument('--outfile', help='filename to output', default='output.xml')
-    parser.add_argument('--style', help='style to use', default=DEFAULT_STYLE)
+    parser.add_argument('--output', help='filename to output', default='output.xml')
+    parser.add_argument('--style', help='mxCell style', default=DEFAULT_STYLE)
     parser.add_argument('--width', default=40)
     parser.add_argument('--height', default=40)
-    parser.add_argument('--prefix', default='')
-    parser.add_argument('--dirtitle', default=False, action='store_true')
+    parser.add_argument('--prefix', help='prefix to add on shape name' , default='')
+    parser.add_argument('--dirtitle', help='Use full path on shape name', default=False, action='store_true')
     parser.add_argument('input', help='input files (iglob and/or directories)', nargs='*')
     args = parser.parse_args()
 
@@ -46,18 +47,10 @@ def _setup_argparse():
 
 def _main():
     args = _setup_argparse()
-    mode = args.mode
-    outfile = args.outfile
-    input_files = args.input
-    prefix = args.prefix
-    h = args.height
-    w = args.width
-    style = args.style
-    dirtitle= args.dirtitle
 
-    output_str = convert(input_files=input_files, mode=mode, prefix=prefix, dirtitle=dirtitle,
-                         style=style, h=h, w=w)
-    with open(outfile, 'w', encoding='utf-8') as text_file:
+    output_str = convert(input_files=args.input, mode=args.mode, prefix=args.prefix, dirtitle=args.dirtitle,
+                         style=args.style, height=args.height, width=args.width)
+    with open(args.output, 'w', encoding='utf-8') as text_file:
         text_file.write(output_str)
 
 if __name__ == '__main__':

@@ -24,13 +24,15 @@ import json
 import os
 import zlib
 
+# TODO: rewrite. This should take input array and return ordered list of file
 def _find_files(x):
     if os.path.exists(x) and os.path.isdir(x):
         return glob.iglob(x + '/**/*.svg', recursive=True)
     else:
         return glob.iglob(x, recursive=True)
 
-def convert(input_files, mode, prefix, dirtitle, style, h, w):
+# TODO: make file discovery parametrized
+def convert(input_files, mode, prefix, dirtitle, style, height, width):
     result = []
     filenames = [_find_files(i) for i in input_files]
     for filename_iter in filenames:
@@ -38,11 +40,11 @@ def convert(input_files, mode, prefix, dirtitle, style, h, w):
             if mode == 'data':
                 shape = create_data_shape(filename,
                                           prefix=prefix, use_directory_on_title=dirtitle,
-                                          w=w, h=h)
+                                          w=width, h=height)
             elif mode == 'xml':
                 shape = create_xml_shape(filename, style=style,
                                          prefix=prefix, use_directory_on_title=dirtitle,
-                                         w=w, h=h)
+                                         w=width, h=height)
             result.append(shape)
 
     output_str = '<mxlibrary>' + json.dumps(result) + '</mxlibrary>'
