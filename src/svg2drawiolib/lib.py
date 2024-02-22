@@ -53,7 +53,7 @@ def convert(input_files, mode, prefix, postfix, dirtitle, style, height, width, 
                                         w=width, h=height)
         elif mode == 'xml':
             shape = _create_xml_shape(filename, style=style,
-                                        prefix=prefix, postfix=postfix use_directory_on_title=dirtitle,
+                                        prefix=prefix, postfix=postfix, use_directory_on_title=dirtitle,
                                         w=width, h=height)
         result.append(shape)
 
