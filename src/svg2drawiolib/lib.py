@@ -25,6 +25,7 @@ import logging
 import os
 import re
 import sys
+from typing_extensions import deprecated
 import zlib
 
 def _find_files_glob(x):
@@ -41,29 +42,31 @@ def _find_files(paths):
     files.sort()
     return files
 
-def convert(input_files, mode, prefix, dirtitle, style, height, width, file_discovery=_find_files):
+def convert(input_files, mode, prefix, postfix, dirtitle, style, height, width, file_discovery=_find_files):
     result = []
     filenames = file_discovery(input_files)
     logging.debug('File discovery found %s files', len(filenames))
     for filename in filenames:
         if mode == 'data':
-            shape = create_data_shape(filename,
-                                        prefix=prefix, use_directory_on_title=dirtitle,
+            shape = _create_data_shape(filename,
+                                        prefix=prefix, postfix=postfix, use_directory_on_title=dirtitle,
                                         w=width, h=height)
         elif mode == 'xml':
-            shape = create_xml_shape(filename, style=style,
-                                        prefix=prefix, use_directory_on_title=dirtitle,
+            shape = _create_xml_shape(filename, style=style,
+                                        prefix=prefix, postfix=postfix use_directory_on_title=dirtitle,
                                         w=width, h=height)
         result.append(shape)
 
     output_str = '<mxlibrary>' + json.dumps(result) + '</mxlibrary>'
     return output_str
 
-def create_data_shape(filename, 
-                      prefix='', use_directory_on_title=False, w=40, h=40):
+@deprecated("Use _create_xml_shape instead")
+def _create_data_shape(filename,
+                      prefix='', postfix='',
+                      use_directory_on_title=False, w=40, h=40):
     with open(filename, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read()).decode("ascii")
-        title = prefix + (filename if use_directory_on_title else os.path.basename(filename))
+        title = prefix + (filename if use_directory_on_title else os.path.basename(filename)) + postfix
         title = re.sub(r'svg$', '', title, count=1, flags=re.I)
         logging.debug('Converting %s with title %s h: %f w: %f' , filename, title, h, w)
         shape = {
@@ -74,8 +77,9 @@ def create_data_shape(filename,
         }
         return shape
 
-def create_xml_shape(filename, style=None,
-                     prefix='', use_directory_on_title=False, w=40, h=40):
+def _create_xml_shape(filename, style=None,
+                     prefix='', postfix='',
+                     use_directory_on_title=False, w=40, h=40):
     if style is None:
         print('xml based shape requires style')
         sys.exit(1)
@@ -89,7 +93,7 @@ def create_xml_shape(filename, style=None,
                    '</mxCell></root></mxGraphModel>')
         compressed_xml = zlib.compress(raw_xml.encode(), wbits=-15)
         encoded_xml = base64.b64encode(compressed_xml).decode("ascii")
-        title = prefix + (filename if use_directory_on_title else os.path.basename(filename))
+        title = prefix + (filename if use_directory_on_title else os.path.basename(filename)) + postfix
         title = re.sub(r'\.svg$', '', title, count=1, flags=re.I)
         title = title.replace('&', '&amp;')
         logging.debug('Converting %s with title %s h: %f w: %f' , filename, title, h, w)

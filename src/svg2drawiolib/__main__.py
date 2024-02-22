@@ -38,6 +38,7 @@ def _setup_argparse():
     parser.add_argument('--width', default=40)
     parser.add_argument('--height', default=40)
     parser.add_argument('--prefix', help='prefix to add on shape name' , default='')
+    parser.add_argument('--postfix', help='postfix to add on shape name' , default='')
     parser.add_argument('--dirtitle', help='Use full path on shape name', default=False, action='store_true')
     parser.add_argument("--log-level", help="Configure the logging level.", default=logging.INFO, type=lambda x: getattr(logging, x))
     parser.add_argument('input', help='input files (iglob and/or directories)', nargs='*')
@@ -55,7 +56,7 @@ def main():
     logging.basicConfig(level=args.log_level)
 
     output_str = convert(input_files=args.input, mode=args.mode, 
-                         prefix=args.prefix, dirtitle=args.dirtitle,
+                         prefix=args.prefix, postfix=args.postfix, dirtitle=args.dirtitle,
                          style=args.style, height=args.height, width=args.width)
     with open(args.output, 'w', encoding='utf-8') as text_file:
         text_file.write(output_str)
