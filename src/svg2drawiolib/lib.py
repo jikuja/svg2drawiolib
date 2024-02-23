@@ -25,8 +25,8 @@ import logging
 import os
 import re
 import sys
-from typing_extensions import deprecated
 import zlib
+#from warnings import deprecated
 
 def _find_files_glob(x):
     if os.path.exists(x) and os.path.isdir(x):
@@ -60,7 +60,7 @@ def convert(input_files, mode, prefix, postfix, dirtitle, style, height, width, 
     output_str = '<mxlibrary>' + json.dumps(result) + '</mxlibrary>'
     return output_str
 
-@deprecated("Use _create_xml_shape instead")
+#@deprecated("Use _create_xml_shape instead")
 def _create_data_shape(filename,
                       prefix='', postfix='',
                       use_directory_on_title=False, w=40, h=40):
